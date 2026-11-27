@@ -56,7 +56,7 @@ function renderRoundsPage(gameContainerElement, roundsAmm, onGameFinished) {
     let userCount = 0;
     let computerCount = 0;
 
-    const [setUserScore, setComputerScore, peekSignContainer] = renderRoundPage(gameContainerElement, roundsAmm)
+    const [setUserScore, setComputerScore, pickSignContainer] = renderRoundPage(gameContainerElement, roundsAmm)
 
     const onRoundFinished = () => {
         if (userCount + computerCount >= roundsAmm) {
@@ -64,10 +64,10 @@ function renderRoundsPage(gameContainerElement, roundsAmm, onGameFinished) {
             return;
         }
 
-        renderSignPick(peekSignContainer, onSignPeeked)
+        renderSignPick(pickSignContainer, onSignpicked)
     }
 
-    const onSignPeeked = (sign) => {
+    const onSignpicked = (sign) => {
         const computerChoice = getComputerChoice();
         const result = getWinner(sign, computerChoice)
         let msg = "";
@@ -89,10 +89,10 @@ function renderRoundsPage(gameContainerElement, roundsAmm, onGameFinished) {
                 throw Error("Invalid game state");
         }
 
-        renderRoundResult(peekSignContainer, sign, computerChoice, msg, onRoundFinished)
+        renderRoundResult(pickSignContainer, sign, computerChoice, msg, onRoundFinished)
     }
 
-    renderSignPick(peekSignContainer, onSignPeeked)
+    renderSignPick(pickSignContainer, onSignpicked)
 }
 
 
@@ -138,14 +138,14 @@ function renderRoundPage(gameContainerElement, roundsAmm) {
     gameContainerElement.appendChild(roundsAmmContainer)
 
 
-    const peekSignContainer = document.createElement("div")
-    gameContainerElement.appendChild(peekSignContainer)
+    const pickSignContainer = document.createElement("div")
+    gameContainerElement.appendChild(pickSignContainer)
 
 
-    return [setUserScore, setComputerScore, peekSignContainer]
+    return [setUserScore, setComputerScore, pickSignContainer]
 }
 
-function renderRoundResult(gameContainer, userPeek, computerPeek, msg, onContinueSubmit) {
+function renderRoundResult(gameContainer, userpick, computerpick, msg, onContinueSubmit) {
     gameContainer.replaceChildren();
 
     
@@ -157,16 +157,16 @@ function renderRoundResult(gameContainer, userPeek, computerPeek, msg, onContinu
     const results = [
         {
             actor: 'user',
-            peek: userPeek
+            pick: userpick
         },
         {
             actor: 'computer',
-            peek: computerPeek
+            pick: computerpick
         }
     ]
 
-    const peeksContainer = document.createElement("div");
-    peeksContainer.id = 'round-result-peeks-container'
+    const picksContainer = document.createElement("div");
+    picksContainer.id = 'round-result-picks-container'
 
 
     results.forEach(result => {
@@ -174,7 +174,7 @@ function renderRoundResult(gameContainer, userPeek, computerPeek, msg, onContinu
         actorChoiceCardContainer.id = 'actor-choice-card-container'
 
         const actorChoiceContainer = document.createElement("div")
-        actorChoiceContainer.innerText = result.peek
+        actorChoiceContainer.innerText = result.pick
         actorChoiceContainer.classList.add('sign-display')
         actorChoiceCardContainer.appendChild(actorChoiceContainer)
 
@@ -182,10 +182,10 @@ function renderRoundResult(gameContainer, userPeek, computerPeek, msg, onContinu
         actorNameContainer.innerText = result.actor
         actorChoiceCardContainer.appendChild(actorNameContainer)
 
-        peeksContainer.appendChild(actorChoiceCardContainer)
+        picksContainer.appendChild(actorChoiceCardContainer)
     })
 
-    gameContainer.appendChild(peeksContainer)
+    gameContainer.appendChild(picksContainer)
 
     const btn = document.createElement('button')
     btn.textContent = 'Continue';
@@ -196,25 +196,25 @@ function renderRoundResult(gameContainer, userPeek, computerPeek, msg, onContinu
 
 
 
-function renderSignPick(signPeekContainer, onSignPeeked) {
-    signPeekContainer.replaceChildren();
+function renderSignPick(signpickContainer, onSignpicked) {
+    signpickContainer.replaceChildren();
     
-    const peekSignLabel = document.createElement("h3")
-    peekSignLabel.innerText = "Peek your sign"
-    signPeekContainer.appendChild(peekSignLabel)
+    const pickSignLabel = document.createElement("h3")
+    pickSignLabel.innerText = "pick your sign"
+    signpickContainer.appendChild(pickSignLabel)
     
     
     const btnsContainer = document.createElement("div")
-    btnsContainer.classList = ['sign-peek-container']
+    btnsContainer.classList = ['sign-pick-container']
     options.forEach(option => {
         const btn = document.createElement('button')
         btn.textContent = option;
-        btn.addEventListener('click', () => onSignPeeked(option))
+        btn.addEventListener('click', () => onSignpicked(option))
         btn.classList.add('sign-display')
         btnsContainer.appendChild(btn)
     })
 
-    signPeekContainer.appendChild(btnsContainer)
+    signpickContainer.appendChild(btnsContainer)
 }
 
 const validateRundsCount = (roundsCount) => {
@@ -229,7 +229,7 @@ const validateRundsCount = (roundsCount) => {
     return { isSuccess: true }
 }
 
-function renderRoundAmountPeekDialog(gameContainerElement, onRoundAmmPeeked) {
+function renderRoundAmountpickDialog(gameContainerElement, onRoundAmmpicked) {
     gameContainerElement.replaceChildren();
     console.log("first page render triggered");
 
@@ -261,7 +261,7 @@ function renderRoundAmountPeekDialog(gameContainerElement, onRoundAmmPeeked) {
             return;
         }
 
-        onRoundAmmPeeked(roundsCount)
+        onRoundAmmpicked(roundsCount)
     })
 
     countInputContainer.appendChild(roundsAmmSubmitButton)
@@ -321,7 +321,7 @@ const renderGameResults = (gameContainerElement, userCount, computerCount, onRes
 function startGame() {
     const gameContainerElement = document.querySelector("#container");
 
-    renderRoundAmountPeekDialog(gameContainerElement, (roundsAmm) => {
+    renderRoundAmountpickDialog(gameContainerElement, (roundsAmm) => {
         const roundsValidationResult = validateRundsCount(roundsAmm)
         if (!roundsValidationResult.isSuccess) {
             throw roundsValidationResult.msg
