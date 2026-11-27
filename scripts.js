@@ -200,7 +200,7 @@ function renderSignPick(signpickContainer, onSignpicked) {
     signpickContainer.replaceChildren();
     
     const pickSignLabel = document.createElement("h3")
-    pickSignLabel.innerText = "pick your sign"
+    pickSignLabel.innerText = "Pick your sign"
     signpickContainer.appendChild(pickSignLabel)
     
     
