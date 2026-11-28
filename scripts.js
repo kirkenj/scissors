@@ -175,7 +175,7 @@ function renderRoundResult(gameContainer, userpick, computerpick, msg, onContinu
 
     results.forEach(result => {
         const actorChoiceCardContainer = document.createElement("div")
-        actorChoiceCardContainer.id = 'actor-choice-card-container'
+        actorChoiceCardContainer.classList.add('actor-choice-card-container')
 
         const actorChoiceContainer = document.createElement("div")
         actorChoiceContainer.innerText = result.pick
@@ -219,7 +219,7 @@ function renderSignPick(signpickContainer, onSignpicked) {
     
     
     const btnsContainer = document.createElement("div")
-    btnsContainer.classList = ['sign-pick-container']
+    btnsContainer.classList.add('sign-pick-container')
     options.forEach(option => {
         const btn = document.createElement('button')
         btn.textContent = option;
@@ -254,7 +254,7 @@ function renderRoundAmountpickDialog(gameContainerElement, onRoundAmmpicked) {
     
     const roundCountInput = document.createElement('input')
     roundCountInput.type = "number"
-    roundCountInput.placeholder = "a number divisible by 3"
+    roundCountInput.placeholder = "an odd number bigger than 2"
     roundCountInput.id = 'round-count-input'
     roundCountInput.value = 3
     countInputContainer.appendChild(roundCountInput)
