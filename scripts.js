@@ -148,10 +148,12 @@ function renderRoundPage(gameContainerElement, roundsAmm) {
 function renderRoundResult(gameContainer, userpick, computerpick, msg, onContinueSubmit) {
     gameContainer.replaceChildren();
 
+    const groupContainer = document.createElement('div')
+
     
     const messageContainer = document.createElement("h3")
     messageContainer.innerText = msg
-    gameContainer.appendChild(messageContainer)
+    groupContainer.appendChild(messageContainer)
 
 
     const results = [
@@ -185,13 +187,16 @@ function renderRoundResult(gameContainer, userpick, computerpick, msg, onContinu
         picksContainer.appendChild(actorChoiceCardContainer)
     })
 
-    gameContainer.appendChild(picksContainer)
+    groupContainer.appendChild(picksContainer)
 
     const btn = document.createElement('button')
     btn.textContent = 'Continue';
-    btn.classList.add('default')
-    btn.addEventListener('click', () => onContinueSubmit())
-    gameContainer.appendChild(btn)
+    btn.classList.add('default');
+
+    groupContainer.addEventListener('click', () => onContinueSubmit())
+    groupContainer.appendChild(btn)
+
+    gameContainer.appendChild(groupContainer)
 }
 
 
@@ -275,6 +280,8 @@ function renderRoundAmountpickDialog(gameContainerElement, onRoundAmmpicked) {
 const renderGameResults = (gameContainerElement, userCount, computerCount, onResultAccepted) => {
     gameContainerElement.replaceChildren();
 
+    const groupContainer = document.createElement('div')
+
     const countsContainer = document.createElement("div")
     countsContainer.id = "counts-container"
 
@@ -294,27 +301,29 @@ const renderGameResults = (gameContainerElement, userCount, computerCount, onRes
     countsContainer.appendChild(computerScoreContainer)
 
 
-    gameContainerElement.appendChild(countsContainer)
+    groupContainer.appendChild(countsContainer)
 
     const finishMessageContainer = document.createElement("h3")
     const userWin = userCount > computerCount
 
     finishMessageContainer.innerText = userWin ? "You win" : "You lose";
-    gameContainerElement.appendChild(finishMessageContainer)
+    groupContainer.appendChild(finishMessageContainer)
 
     const imageContainer = document.createElement('div')
     imageContainer.id = 'image-container';
     const image = document.createElement('img')
     image.src = `images/${Math.round(1 + 3 * Math.random())}.png`
     imageContainer.appendChild(image)
-    gameContainerElement.appendChild(imageContainer)
+    groupContainer.appendChild(imageContainer)
 
     
     const submitButton = document.createElement('button')
     submitButton.textContent = 'Ok!'
     submitButton.classList.add('default')
-    submitButton.addEventListener("click", onResultAccepted)
-    gameContainerElement.appendChild(submitButton)
+    groupContainer.addEventListener("click", onResultAccepted)
+    groupContainer.appendChild(submitButton)
+
+    gameContainerElement.appendChild(groupContainer)
 }
 
 
