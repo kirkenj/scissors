@@ -56,10 +56,12 @@ function renderRoundsPage(gameContainerElement, roundsAmm, onGameFinished) {
     let userCount = 0;
     let computerCount = 0;
 
+    let roundsToWin = Math.round(roundsAmm / 2)
+
     const [setUserScore, setComputerScore, pickSignContainer] = renderRoundPage(gameContainerElement, roundsAmm)
 
     const onRoundFinished = () => {
-        if (userCount + computerCount >= roundsAmm) {
+        if (userCount >= roundsToWin || computerCount >= roundsToWin) {
             onGameFinished(userCount, computerCount)
             return;
         }
@@ -223,12 +225,12 @@ function renderSignPick(signpickContainer, onSignpicked) {
 }
 
 const validateRundsCount = (roundsCount) => {
-    if (roundsCount <= 0) {
-        return { isSuccess: false, msg: "Rounds count must be bigger than 0" };
+    if (roundsCount <= 2) {
+        return { isSuccess: false, msg: "Rounds count must be bigger than 2" };
     }
 
-    if (roundsCount % 3 !== 0) {
-        return { isSuccess: false, msg: "Rounds count must be devidable by 3" };
+    if (roundsCount % 2 !== 1) {
+        return { isSuccess: false, msg: "Rounds count must be odd" };
     }
 
     return { isSuccess: true }
