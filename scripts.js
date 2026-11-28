@@ -191,12 +191,19 @@ function renderRoundResult(gameContainer, userpick, computerpick, msg, onContinu
 
     groupContainer.appendChild(picksContainer)
 
+
     const btn = document.createElement('button')
     btn.textContent = 'Continue';
     btn.classList.add('default');
+    groupContainer.appendChild(btn)
+
+    const tapToContinueMsg = document.createElement('div')
+    tapToContinueMsg.textContent = 'or just tap to continue';
+    tapToContinueMsg.classList.add('tap-to-continue-msg')
+    groupContainer.appendChild(tapToContinueMsg)
+
 
     groupContainer.addEventListener('click', () => onContinueSubmit())
-    groupContainer.appendChild(btn)
 
     gameContainer.appendChild(groupContainer)
 }
@@ -318,12 +325,17 @@ const renderGameResults = (gameContainerElement, userCount, computerCount, onRes
     imageContainer.appendChild(image)
     groupContainer.appendChild(imageContainer)
 
-    
     const submitButton = document.createElement('button')
     submitButton.textContent = 'Ok!'
     submitButton.classList.add('default')
     groupContainer.addEventListener("click", onResultAccepted)
     groupContainer.appendChild(submitButton)
+
+        const tapToContinueMsg = document.createElement('div')
+    tapToContinueMsg.textContent = 'or just tap to continue';
+    tapToContinueMsg.classList.add('tap-to-continue-msg')
+    groupContainer.appendChild(tapToContinueMsg)
+
 
     gameContainerElement.appendChild(groupContainer)
 }

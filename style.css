@@ -66,6 +66,10 @@ body {
   min-height: 80px;
 }
 
+.tap-to-continue-msg{
+  font-size: 8px;
+}
+
 
 .sign-pick-container{
   display: flex;
